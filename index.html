@@ -1,58 +1,681 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>セールスバディ｜再現性のある営業の提案の質を最大化</title>
-  <meta name="description" content="個人に依存している商談準備を営業専属のAIアドバイザーが標準化し、誰でも質の高い提案ができる営業組織を作ります。">
-  <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;color:#222;line-height:1.6}
-    header{position:sticky;top:0;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:14px 0}
-    .wrap{max-width:960px;margin:0 auto;padding:0 20px}
-    .logo{font-weight:700}
-    .hero{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:72px 0;text-align:center}
-    .btn{display:inline-block;margin-top:14px;padding:12px 18px;border-radius:999px;background:#fff;color:#333;text-decoration:none;font-weight:700}
-    section{padding:56px 0}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-    .card{background:#fff;border:1px solid #eee;border-radius:16px;padding:18px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    footer{background:#333;color:#fff;text-align:center;padding:24px 0}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>セールスバディ - 再現性のある営業の提案の質を最大化</title>
+    <meta name="description" content="個人に依存している商談準備を営業専属のAIアドバイザーが標準化し、誰でも質の高い提案ができる営業組織を作ります。">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .beta-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="3" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Problems Section */
+        .problems {
+            padding: 80px 0;
+            background: #f8faff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e8f0ff;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+        }
+
+        .problem-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        /* Solution Section */
+        .solution {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .solution-hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .solution-hero h2 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8faff 0%, #e8f0ff 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+        }
+
+        .feature-card:nth-child(1) { border-left-color: #667eea; }
+        .feature-card:nth-child(2) { border-left-color: #764ba2; }
+        .feature-card:nth-child(3) { border-left-color: #ff6b6b; }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Before After Section */
+        .before-after {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .before, .after {
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .before {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            border: 2px solid #ef5350;
+        }
+
+        .after {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border: 2px solid #4caf50;
+        }
+
+        .comparison-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Use Cases Section */
+        .use-cases {
+            padding: 80px 0;
+            background: #f8faff;
+        }
+
+        .use-case {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #667eea;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="20" r="3" fill="rgba(255,255,255,0.05)"/><circle cx="60" cy="90" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 25s infinite linear reverse;
+        }
+
+        .final-cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2em;
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        /* Form Styles */
+        .beta-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            margin: 40px auto 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+    </style>
 </head>
 <body>
-  <header><div class="wrap"><span class="logo">セールスバディ</span> <small style="opacity:.8">BETA</small></div></header>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <span class="logo">セールスバディ</span>
+                    <span class="beta-tag">BETA</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-  <section class="hero">
-    <div class="wrap">
-      <h1>再現性のある営業の<br>提案の質を最大化</h1>
-      <p>商談準備をAIが標準化。誰でも一貫して刺さる提案へ。</p>
-      <a class="btn" href="#beta">β版優先案内に登録</a>
-    </div>
-  </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>再現性のある営業の<br>提案の質を最大化</h1>
+                <p class="subtitle">個人に依存している商談準備を営業専属のAIアドバイザーが標準化し、<br>誰でも質の高い提案ができる営業組織を作ります。</p>
+                <a href="#beta-signup" class="cta-button">ベータ版優先案内を受け取る</a>
+            </div>
+        </div>
+    </section>
 
-  <section>
-    <div class="wrap">
-      <h2>こんな悩みはありませんか？</h2>
-      <div class="grid" style="margin-top:12px">
-        <div class="card">💬 アイスブレイクの話題が浮かばない</div>
-        <div class="card">🏢 先方企業の“本当の課題”が掴めない</div>
-        <div class="card">👤 参加者の立場ごとの関心に合わせづらい</div>
-      </div>
-    </div>
-  </section>
+    <!-- Problems Section -->
+    <section class="problems">
+        <div class="container">
+            <h2 class="section-title">こんな悩みはありませんか？</h2>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">💬</div>
+                    <h3>アイスブレイクで何を話したら良いのか？</h3>
+                    <p>商談の最初の会話で関係性を築くのに苦労している</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🏢</div>
+                    <h3>この会社の課題はなんだろうか？</h3>
+                    <p>提案先企業の真の課題を把握するのが困難</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">👤</div>
+                    <h3>対面が悩んでいる課題はなんだろうか？</h3>
+                    <p>商談相手の個人的な課題やニーズが分からない</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📚</div>
+                    <h3>どのような教育をすれば売れる営業になるか？</h3>
+                    <p>営業スキルの向上方法が体系化されていない</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="beta">
-    <div class="wrap">
-      <h2>β版優先案内</h2>
-      <p>メールだけでOK。開始時にご連絡します。</p>
-      <!-- まずは簡易フォームサービスに差し替え推奨（Googleフォーム/Tallyなど） -->
-      <form action="https://formsubmit.co/あなたのメール" method="POST" style="max-width:420px">
-        <input type="email" name="email" placeholder="メールアドレス" required
-               style="width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:8px 0">
-        <button class="btn" type="submit">登録する</button>
-      </form>
-    </div>
-  </section>
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <div class="solution-hero">
+                <h2>セールスバディはこれらの課題を全て解決します</h2>
+                <p style="font-size: 1.2em; color: #666; margin-top: 20px;">
+                    自社製品の情報と提案先の企業情報をインプットすると会話のきっかけとなるテーマや会社の課題をセールスバディが準備。<br>
+                    営業は商談準備をすることなく、質の高い提案をすることができます。
+                </p>
+            </div>
+        </div>
+    </section>
 
-  <footer>© 2025 SalesBuddy</footer>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">主要機能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📊 企業動向の自動分析</h3>
+                    <p>提案先企業の直近の動向を一覧化。関係構築しやすいテーマをAIが提案し、自然な会話のきっかけを作ります。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎯 課題の自動抽出</h3>
+                    <p>Web情報から営業活動に役立つ情報を全て抽出。自社の製品が解決できる、提案先企業の成長課題をAIが提案します。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>👥 参加者分析</h3>
+                    <p>取引先企業の属性と当日参加する部署名から、参加者の想定課題をAIが提案し、効果的なアプローチを可能にします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before After Section -->
+    <section class="before-after">
+        <div class="container">
+            <h2 class="section-title">導入後の変化</h2>
+            <div class="comparison">
+                <div class="before">
+                    <div class="comparison-title">❌ Before</div>
+                    <ul style="list-style: none; text-align: left;">
+                        <li>• 自信がないまま現場へ</li>
+                        <li>• 営業スキルが上がらない</li>
+                        <li>• 教える人によってバラバラ</li>
+                        <li>• 標準化されていない</li>
+                        <li>• マネージャーに負荷集中</li>
+                        <li>• 評価も主観的</li>
+                    </ul>
+                </div>
+                <div class="after">
+                    <div class="comparison-title">✅ After</div>
+                    <ul style="list-style: none; text-align: left;">
+                        <li>• 自信をつけて現場へ</li>
+                        <li>• 即戦力として活躍</li>
+                        <li>• AIで一貫した育成</li>
+                        <li>• 誰でも同じレベルに</li>
+                        <li>• AIが自動で採点・分析</li>
+                        <li>• 指導がラクに、明確に</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">導入効果</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>🎯 提案の質を改善</h3>
+                    <p>顧客の最新動向や部署ごとの想定課題をAIが提示。経験や勘に頼らず、誰でも一貫して"刺さる提案"を実現し、営業力を強化。</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>⏰ 商談の準備時間を削減</h3>
+                    <p>企業ニュース・業界トレンド・参加者の課題を自動で収集・整理。面倒な事前調査を大幅に短縮し、商談に集中できる環境をつくります。</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>🚀 営業サイクルの短縮</h3>
+                    <p>無駄なヒアリングや的外れな提案が減り、商談がスムーズに進むことでクロージングまでの期間が短くなる。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <h2 class="section-title">活用シーン</h2>
+            
+            <div class="use-case">
+                <h3>🏭 製造業</h3>
+                <p><strong>活用内容：</strong> 部品調達担当や経営層に向けた、コスト削減や品質改善の提案力を強化。</p>
+                <p><strong>効果：</strong> 技術的価値をわかりやすく伝えられ、取引拡大や長期契約の獲得につながる。</p>
+            </div>
+            
+            <div class="use-case">
+                <h3>🛡️ 保険業界</h3>
+                <p><strong>活用内容：</strong> 個人や法人顧客に向けた、ライフプランやリスクに応じた提案力を強化。</p>
+                <p><strong>効果：</strong> 顧客ニーズを的確に捉え、契約率や解約率の改善につながる。</p>
+            </div>
+            
+            <div class="use-case">
+                <h3>🏘️ 不動産</h3>
+                <p><strong>活用内容：</strong> 購入検討者や法人テナントに向けた、物件提案のスキルを強化。</p>
+                <p><strong>効果：</strong> 顧客の信頼を得ながら提案ができ、契約成立率やクロージングスピードの向上につながる。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta" id="beta-signup">
+        <div class="container">
+            <div class="final-cta-content">
+                <h2 style="font-size: 2.5em; margin-bottom: 20px;">誰でも、成果を出せる営業に</h2>
+                <p style="font-size: 1.3em; margin-bottom: 40px;">現場さながらのAIロープレで、再現性のあるスキル構造で、組織を平準化。</p>
+                
+                <div class="beta-form">
+                    <h3 style="margin-bottom: 30px; font-size: 1.5em;">ベータ版優先案内お申し込み</h3>
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="company">会社名 *</label>
+                            <input type="text" id="company" name="company" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">お名前 *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">メールアドレス *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">電話番号</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="industry">業界</label>
+                            <select id="industry" name="industry">
+                                <option value="">選択してください</option>
+                                <option value="manufacturing">製造業</option>
+                                <option value="insurance">保険業</option>
+                                <option value="real-estate">不動産業</option>
+                                <option value="it">IT・ソフトウェア</option>
+                                <option value="finance">金融業</option>
+                                <option value="consulting">コンサルティング</option>
+                                <option value="other">その他</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%; margin-top: 20px;">
+                            優先案内を受け取る
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">情報セキュリティ基本方針</a>
+                <a href="#">個人情報保護基本方針</a>
+                <a href="#">AI基本ポリシー</a>
+            </div>
+            <p>&copy; 2025 セールスバディ. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for CTA button
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#beta-signup').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Form submission handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('ベータ版優先案内へのお申し込みありがとうございます。確認メールを送信いたします。');
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease-out';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
